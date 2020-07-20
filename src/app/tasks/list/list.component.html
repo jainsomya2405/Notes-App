@@ -1,0 +1,14 @@
+<div class="list-height">
+  <div class="list-group">
+    <a
+      class="list-group-item list-group-item-action flex-column align-items-start"
+      *ngFor="let task of tasks; let index = index"
+      (click)="selectTask(task)"
+    >
+      <div class="d-flex w-100 justify-content-between">
+        <h6 class="mb-1">{{ task.name }}</h6>
+      </div>
+      <small>{{ task.createdDate | date: "shortDate" }}</small>
+    </a>
+  </div>
+</div>

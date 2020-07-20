@@ -1,0 +1,8 @@
+<div class="row task-height">
+  <div class="col-md-3 col-sm-6">
+    <app-list (taskData)="noteData($event)"></app-list>
+  </div>
+  <div class="col-md-9 col-sm-6">
+    <input type="text" [(ngModel)]="name" (ngModelChange)="dataChanged($event)" />
+  </div>
+</div>
