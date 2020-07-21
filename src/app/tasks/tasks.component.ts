@@ -3,8 +3,6 @@ import {
   OnInit,
   ViewChild,
   ChangeDetectorRef,
-  OnChanges,
-  SimpleChanges,
   OnDestroy,
 } from '@angular/core';
 import { Task } from './task.model';
@@ -18,21 +16,15 @@ import { ListComponent } from './list/list.component';
 })
 export class TasksComponent implements OnInit, OnDestroy {
   name: string;
-  // tasks: Task[];
   @ViewChild(ListComponent) taskViewChild: ListComponent;
   outputTask: Task;
 
   constructor(
     private tasksService: TasksService,
     private cd: ChangeDetectorRef
-  ) {
-    // this.tasks = this.tasksService.getTasks();
-    // console.log(this.tasks);
-  }
+  ) {}
 
-  ngOnInit(): void {
-    // console.log(this.task);
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
     if (this.taskViewChild && this.taskViewChild.selectedTask && !this.name) {

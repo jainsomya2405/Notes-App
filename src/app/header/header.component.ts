@@ -18,11 +18,11 @@ export class HeaderComponent implements OnInit {
 
   createTask() {
     this.tasksService.addTask();
-    this.router.navigate(['/']);
+    // this.router.navigate(['tasks/list']);
   }
 
   deleteTask(){
     this.tasksService.deleteTask();
-    this.router.navigate(['/']);
+    // this.router.navigate(['tasks/list']);
   }
 }

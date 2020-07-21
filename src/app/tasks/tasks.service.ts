@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task.model';
-import { LowerCasePipe } from '@angular/common';
+import {  BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {
@@ -10,17 +10,9 @@ export class TasksService {
     new Task(3, 'New Task 3', new Date()),
     new Task(4, 'New Task 4', new Date()),
     new Task(5, 'New Task 5', new Date()),
-    new Task(6, 'New Task 5', new Date()),
-    new Task(7, 'New Task 5', new Date()),
-    new Task(8, 'New Task 5', new Date()),
-    new Task(9, 'New Task 5', new Date()),
-    new Task(10, 'New Task 5', new Date()),
-    new Task(11, 'New Task 5', new Date()),
-    new Task(12, 'New Task 5', new Date()),
-    new Task(13, 'New Task 5', new Date()),
-    new Task(14, 'New Task 5', new Date()),
-    new Task(15, 'New Task 5', new Date()),
   ];
+  taskChanged = new BehaviorSubject<Task[]>(this.tasks);
+  isTaskUpdate = false;
 
   constructor() {}
 
@@ -33,24 +25,34 @@ export class TasksService {
   }
 
   addTask() {
+    this.isTaskUpdate = true;
     const tasks = this.getLocalStorageTasks();
     tasks.push(new Task(tasks.length + 1, 'New Task', new Date()));
     localStorage.setItem('tasks', JSON.stringify(tasks));
-    return null;
+    this.taskChanged.next(tasks);
   }
 
   savedData(task: Task) {
+    this.isTaskUpdate = true;
     const tasks = this.getLocalStorageTasks();
     tasks.forEach((data: Task) => {
       if (data.id == task.id) data.name = task.name;
     });
     localStorage.setItem('tasks', JSON.stringify(tasks));
+    this.taskChanged.next(tasks);
   }
 
   deleteTask() {
+    debugger;
+    this.isTaskUpdate = true;
     const selectedTask = JSON.parse(localStorage.getItem('selectedTask'));
     const tasks = this.getLocalStorageTasks();
-    tasks.splice(selectedTask.id, 1);
+    tasks.splice(selectedTask.id - 1, 1);
     localStorage.setItem('tasks', JSON.stringify(tasks));
+    this.taskChanged.next(tasks);
+  }
+
+  isUpdatedTask() {
+    this.isTaskUpdate = false;
   }
 }

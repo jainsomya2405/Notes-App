@@ -9,6 +9,7 @@ import {
 import { Task } from '../task.model';
 import { TasksService } from '../tasks.service';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -19,6 +20,7 @@ export class ListComponent implements OnInit, DoCheck, OnDestroy {
   selectedTask: Task;
   @Output() taskData = new EventEmitter<Task>();
   tasks: Task[];
+  taskSubs: Subscription;
 
   constructor(
     private tasksService: TasksService,
@@ -26,16 +28,18 @@ export class ListComponent implements OnInit, DoCheck, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log(this.route);
-    const data = localStorage.getItem('tasks');
-    if (JSON.parse(data)) {
-      this.tasks = JSON.parse(localStorage.getItem('tasks'));
+    if (this.tasksService.isTaskUpdate) {
+      this.taskSubs = this.tasksService.taskChanged.subscribe(
+        (task: Task[]) => {
+          if (task) {
+            this.tasks = task;
+          }
+        }
+      );
     } else {
       this.tasks = this.tasksService.getTasks();
       localStorage.setItem('tasks', JSON.stringify(this.tasks));
     }
-    // this.tasks = this.tasksService.getTasks();
-    // localStorage.setItem('tasks', JSON.stringify(this.tasks));
     if (!this.selectedTask) {
       this.selectedTask = this.tasks[0];
       localStorage.setItem('selectedTask', JSON.stringify(this.selectedTask));
@@ -43,7 +47,16 @@ export class ListComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   ngDoCheck() {
-    // console.log('do cjheck', this.selectedTask);
+    if (this.tasksService.isTaskUpdate) {
+      this.taskSubs = this.tasksService.taskChanged.subscribe(
+        (task: Task[]) => {
+          if (task) {
+            this.tasks = task;
+          }
+          this.tasksService.isUpdatedTask();
+        }
+      );
+    }
   }
 
   selectTask(data: Task) {
@@ -54,5 +67,6 @@ export class ListComponent implements OnInit, DoCheck, OnDestroy {
 
   ngOnDestroy() {
     localStorage.removeItem('tasks');
+    this.taskSubs.unsubscribe();
   }
 }
