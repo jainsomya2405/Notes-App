@@ -24,11 +24,14 @@ export class TasksComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.outputTask = JSON.parse(localStorage.getItem('selectedTask'));
+  }
 
   ngAfterViewInit() {
-    if (this.taskViewChild && this.taskViewChild.selectedTask && !this.name) {
+    if (this.taskViewChild && this.taskViewChild.selectedTask) {
       this.name = this.taskViewChild.selectedTask.name;
+      this.outputTask = this.taskViewChild.selectedTask;
       this.cd.detectChanges();
     }
   }
@@ -42,6 +45,10 @@ export class TasksComponent implements OnInit, OnDestroy {
   noteData(event: Task) {
     this.outputTask = event;
     this.name = event.name;
+  }
+
+  descriptionChanged(event: string) {
+    this.tasksService.savedData(this.taskViewChild.selectedTask);
   }
 
   ngOnDestroy() {

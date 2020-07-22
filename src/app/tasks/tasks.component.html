@@ -3,6 +3,32 @@
     <app-list (taskData)="noteData($event)"></app-list>
   </div>
   <div class="col-md-9 col-sm-6">
-    <input type="text" [(ngModel)]="name" (ngModelChange)="dataChanged($event)" />
+    <div class="row my-2">
+      <div class="col-md-12 text-center date-field">
+        {{ outputTask.createdDate | date: "MMMM dd , yyyy h:mm a" }}
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <input
+          class="text-field"
+          type="text"
+          [(ngModel)]="name"
+          (ngModelChange)="dataChanged($event)"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <textarea
+          class="text-field"
+          name="description"
+          id="description"
+          rows="20"
+          [(ngModel)]="outputTask.description"
+          (ngModelChange)="descriptionChanged($event)"
+        ></textarea>
+      </div>
+    </div>
   </div>
 </div>

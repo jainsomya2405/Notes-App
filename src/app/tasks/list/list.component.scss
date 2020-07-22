@@ -2,3 +2,15 @@
   overflow-y: scroll;
   height: calc(100vh - 58px);
 }
+
+.date-width {
+  width: 50%;
+}
+
+.description-text {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 20px;
+}

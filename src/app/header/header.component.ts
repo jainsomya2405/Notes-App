@@ -23,6 +23,6 @@ export class HeaderComponent implements OnInit {
 
   deleteTask(){
     this.tasksService.deleteTask();
-    // this.router.navigate(['tasks/list']);
+    this.router.navigate(['tasks']);
   }
 }

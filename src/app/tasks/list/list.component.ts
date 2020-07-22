@@ -32,15 +32,16 @@ export class ListComponent implements OnInit, DoCheck, OnDestroy {
       this.taskSubs = this.tasksService.taskChanged.subscribe(
         (task: Task[]) => {
           if (task) {
-            this.tasks = task;
+            this.tasks = this.sortDate(task);
+            this.selectedTask = JSON.parse(
+              localStorage.getItem('selectedTask')
+            );
           }
         }
       );
     } else {
-      this.tasks = this.tasksService.getTasks();
+      this.tasks = this.sortDate(this.tasksService.getTasks());
       localStorage.setItem('tasks', JSON.stringify(this.tasks));
-    }
-    if (!this.selectedTask) {
       this.selectedTask = this.tasks[0];
       localStorage.setItem('selectedTask', JSON.stringify(this.selectedTask));
     }
@@ -51,11 +52,13 @@ export class ListComponent implements OnInit, DoCheck, OnDestroy {
       this.taskSubs = this.tasksService.taskChanged.subscribe(
         (task: Task[]) => {
           if (task) {
-            this.tasks = task;
+            this.tasks = this.sortDate(task);
           }
           this.tasksService.isUpdatedTask();
         }
       );
+      this.selectedTask = JSON.parse(localStorage.getItem('selectedTask'));
+      this.taskData.emit(this.selectedTask);
     }
   }
 
@@ -63,6 +66,12 @@ export class ListComponent implements OnInit, DoCheck, OnDestroy {
     this.selectedTask = data;
     localStorage.setItem('selectedTask', JSON.stringify(this.selectedTask));
     this.taskData.emit(data);
+  }
+
+  sortDate(tasks: Task[]) {
+    return tasks.sort((first: any, second: any): number => {
+      return first.createdDate < second.createdDate ? 1 : -1;
+    });
   }
 
   ngOnDestroy() {

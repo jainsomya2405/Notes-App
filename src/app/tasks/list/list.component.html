@@ -5,10 +5,11 @@
       *ngFor="let task of tasks; let index = index"
       (click)="selectTask(task)"
     >
+      <h6 class="mb-1">{{ task.name }}</h6>
       <div class="d-flex w-100 justify-content-between">
-        <h6 class="mb-1">{{ task.name }}</h6>
+        <small class="date-width">{{ task.createdDate | date: "dd MMM yyyy" }}</small>
+        <small class="description-text">{{ task.description }}</small>
       </div>
-      <small>{{ task.createdDate | date: "shortDate" }}</small>
     </a>
   </div>
 </div>

@@ -1,3 +1,25 @@
-// .task-height{
-//     height:100vh;
-// }
+.text-field {
+  width: 70vw;
+  color: #404040;
+  font-size: 13px;
+}
+
+.date-field {
+  font-size: 14px;
+  color: #c0c0c0;
+  font-weight: 400;
+}
+
+input,
+textarea {
+  border: none;
+}
+
+textarea {
+  resize: none;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+}
