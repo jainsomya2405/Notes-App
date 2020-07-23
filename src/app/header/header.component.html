@@ -31,6 +31,9 @@
         type="search"
         placeholder="Search"
         aria-label="Search"
+        [(ngModel)]="filterText"
+        name="filterText"
+        (ngModelChange)="search($event)"
       />
     </form>
   </div>

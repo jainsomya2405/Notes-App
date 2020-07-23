@@ -8,6 +8,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  filterText: any;
+
   constructor(
     private tasksService: TasksService,
     private router: Router,
@@ -21,8 +23,12 @@ export class HeaderComponent implements OnInit {
     // this.router.navigate(['tasks/list']);
   }
 
-  deleteTask(){
+  deleteTask() {
     this.tasksService.deleteTask();
     this.router.navigate(['tasks']);
+  }
+
+  search(event: any) {
+    this.tasksService.searchChanged.next(event);
   }
 }

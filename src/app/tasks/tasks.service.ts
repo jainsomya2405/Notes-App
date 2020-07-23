@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {
@@ -9,13 +9,13 @@ export class TasksService {
       1,
       'New Task 1',
       new Date(2018, 11, 24, 10, 33, 30, 0),
-      'This is our newly task 1'
+      'Harshita'
     ),
     new Task(
       2,
       'New Task 2',
       new Date(2020, 6, 20, 23, 30, 30, 0),
-      'This is our newly task 2'
+      'somya'
     ),
     new Task(
       3,
@@ -27,17 +27,18 @@ export class TasksService {
       4,
       'New Task 4',
       new Date(2020, 6, 21, 16, 25, 30, 0),
-      'This is our newly task 4'
+      'jain'
     ),
     new Task(
       5,
       'New Task 5',
       new Date(2020, 6, 22, 13, 0, 0, 0),
-      'This is our newly task 5'
+      'jain'
     ),
   ];
   taskChanged = new BehaviorSubject<Task[]>(this.tasks);
   isTaskUpdate = false;
+  searchChanged= new Subject<any>();
 
   constructor() {}
 

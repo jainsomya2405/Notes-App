@@ -21,6 +21,7 @@ export class ListComponent implements OnInit, DoCheck, OnDestroy {
   @Output() taskData = new EventEmitter<Task>();
   tasks: Task[];
   taskSubs: Subscription;
+  filterText: any;
 
   constructor(
     private tasksService: TasksService,
@@ -45,6 +46,9 @@ export class ListComponent implements OnInit, DoCheck, OnDestroy {
       this.selectedTask = this.tasks[0];
       localStorage.setItem('selectedTask', JSON.stringify(this.selectedTask));
     }
+    this.tasksService.searchChanged.subscribe((data: any) => {
+      this.filterText = data;
+    });
   }
 
   ngDoCheck() {
@@ -60,6 +64,9 @@ export class ListComponent implements OnInit, DoCheck, OnDestroy {
       this.selectedTask = JSON.parse(localStorage.getItem('selectedTask'));
       this.taskData.emit(this.selectedTask);
     }
+    this.tasksService.searchChanged.subscribe((data: any) => {
+      this.filterText = data;
+    });
   }
 
   selectTask(data: Task) {

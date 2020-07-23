@@ -2,7 +2,7 @@
   <div class="list-group">
     <a
       class="list-group-item list-group-item-action flex-column align-items-start"
-      *ngFor="let task of tasks; let index = index"
+      *ngFor="let task of tasks | searchFilter:filterText"
       (click)="selectTask(task)"
     >
       <h6 class="mb-1">{{ task.name }}</h6>
