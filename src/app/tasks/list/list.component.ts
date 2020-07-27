@@ -10,6 +10,9 @@ import { Task } from '../task.model';
 import { TasksService } from '../tasks.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import * as fromApp from '../../store/app.reducer';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
@@ -25,10 +28,22 @@ export class ListComponent implements OnInit, DoCheck, OnDestroy {
 
   constructor(
     private tasksService: TasksService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<fromApp.AppState>
   ) {}
 
   ngOnInit() {
+    // console.log(this.store.select('task'));
+    // this.store
+    //   .select('task')
+    //   .pipe(
+    //     map((recipeState) => {
+    //       return recipeState.tasks;
+    //     })
+    //   )
+    //   .subscribe((data) => {
+    //     console.log(data);
+    //   });
     if (this.tasksService.isTaskUpdate) {
       this.taskSubs = this.tasksService.taskChanged.subscribe(
         (task: Task[]) => {

@@ -8,6 +8,8 @@ import { TasksComponent } from './tasks/tasks.component';
 import { ListComponent } from './tasks/list/list.component';
 import { AppRoutingModule } from './app.routing.module';
 import { SearchFilterPipe } from './pipe/search-filter.pipe';
+import { StoreModule } from '@ngrx/store';
+import * as fromApp from './store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,12 @@ import { SearchFilterPipe } from './pipe/search-filter.pipe';
     ListComponent,
     SearchFilterPipe,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    StoreModule.forRoot(fromApp.appReducer),
+  ],
   providers: [],
   exports: [SearchFilterPipe],
   bootstrap: [AppComponent],
